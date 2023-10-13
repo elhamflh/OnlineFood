@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'accounts',
 ]
 
 MIDDLEWARE = [
@@ -87,7 +88,7 @@ DATABASES = {
         
     }
 }
-
+AUTH_USER_MODEL = 'accounts.User' #for that the database user our custom users
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -126,7 +127,6 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS= [
     BASE_DIR/'static',]
-
 # STATIC_ROOT= BASE_DIR/'static'
 # STATIC_ROOT= os.path.join(BASE_DIR , 'static')
 
@@ -134,3 +134,9 @@ STATICFILES_DIRS= [
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# media_configrtion
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT= BASE_DIR/'media'
