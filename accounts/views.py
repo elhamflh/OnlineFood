@@ -14,18 +14,19 @@ from django.utils.http import urlsafe_base64_decode
 
 
 # restric the vendor from accsesing the customer page
+def check_role_vendor(user):
+    if user.role ==1 :
+        return True
+    else:
+        raise PermissionDenied
+
 
 def check_role_customer(user):
-    if user.role == 1:
+    if user.role == 2:
         return True
     else:
         raise PermissionDenied
     
-def check_role_vendor(user):
-    if user.role ==2 :
-        return True
-    else:
-        raise PermissionDenied
 
 def registerUser(request):
     if request.method == 'POST':
