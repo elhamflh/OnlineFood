@@ -10,6 +10,10 @@ class CustomUserAdmin(UserAdmin):
     filter_horizontal= ()
     list_filter= ()
     fieldsets=()
+    
 admin.site.register(User, CustomUserAdmin)
 admin.site.register(UserProfile)
+
+
+
 

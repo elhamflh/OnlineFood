@@ -11,7 +11,7 @@ from django.core.exceptions import PermissionDenied
 from.utils import send_verification_email
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.http import urlsafe_base64_decode
-
+from vendor.models import Vendor
 
 # restric the vendor from accsesing the customer page
 def check_role_vendor(user):
@@ -170,7 +170,11 @@ def cus_dashbord(request):
 @login_required(login_url ='login')
 @user_passes_test(check_role_vendor)
 def ven_dashbord(request):
-    return render (request,"accounts/venDashbord.html")
+    vendor = Vendor.objects.get(user = request.user)
+    context={
+        'vendor': vendor,
+    }  
+    return render (request,"accounts/venDashbord.html", context)
 
 
 def forget_password(request):
