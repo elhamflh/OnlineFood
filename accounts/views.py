@@ -41,7 +41,6 @@ def registerUser(request):
             # user.role = User.CUSTOMER
             # form.save()
             
-            
             # Create the user using create_user method
             
             first_name = form.cleaned_data['first_name']
@@ -99,7 +98,7 @@ def registerVendor(request):
             email_template = 'accounts/email/account_verification_email.html'
             send_verification_email(request, user, mail_subject, email_template)
             messages.success(request, 'Your account has been registered sucessfully! Please wait for the approval.')
-            return redirect('registerVendor')
+            return redirect('home')
         else:
             print('invalid form')
             print(form.errors)
@@ -163,7 +162,8 @@ def my_account(request):
     return redirect(redirectUrl)
 
 @login_required(login_url ='login')
-@user_passes_test(check_role_customer)  
+@user_passes_test(check_role_customer)
+  
 def cus_dashbord(request):
     return render (request,"accounts/cusDashbord.html")
 
@@ -212,7 +212,6 @@ def reset_password_validate(request, uidb64, token):
     else:
         messages.error(request, 'This link has been expired!')
         return redirect('myAccount')
-
 
 def reset_password(request):
     if request.method == 'POST':
