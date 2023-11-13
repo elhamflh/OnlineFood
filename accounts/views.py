@@ -1,4 +1,4 @@
-from django.shortcuts import render , redirect
+from django.shortcuts import render , redirect 
 from django.http import HttpResponse
 from .forms import UserForm
 from .models import User , UserProfile
@@ -12,6 +12,7 @@ from.utils import send_verification_email
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.http import urlsafe_base64_decode
 from vendor.models import Vendor
+from django.template.defaultfilters import slugify
 
 # restric the vendor from accsesing the customer page
 def check_role_vendor(user):
@@ -85,6 +86,8 @@ def registerVendor(request):
             user.save()
             vendor = v_form.save(commit=False)
             vendor.user = user
+            vendor_name= v_form.cleaned_data['vendor_name']
+            vendor.vendor_slug = slugify(vendor_name)+'-'+str(user.id) #برای اینکه اگر کسی اسلاگ مشابه داشت, ایدی آن یوزر را به اسلاگ اضافه کند که یونیک شود
             user_profile = UserProfile.objects.get(user=user)
             vendor.user_profile = user_profile
             vendor.save()
