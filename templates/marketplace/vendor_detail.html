@@ -24,6 +24,7 @@
                                     <img src="{% static 'images/default-profile.png' %}" alt="">
                                     {% endif %}
                                 </figure>
+
                             </div>
                             <div class="text-holder">
                                 <span class="restaurant-title">{{ vendor.vendor_name }} {% if not vendor.is_open %}[Closed]{% endif %}</span>
@@ -93,24 +94,25 @@
                                 <div class="menu-itam-holder">
                                     
                                     <div id="menu-item-list-6272" class="menu-itam-list">
-                                        
+                                        {% if categories %}
                                         {% for category in categories %}
                                         <div class="element-title" id="menu-category-2">
                                             <h5 class="text-color">{{ category }}</h5>
                                             <span>{{ category.description }}</span>
                                         </div>
                                         <ul>
-                                            {% for food in category.fooditems.all %}
+                                            {% for food in category.fooditem.all %}
                                             <li>
                                                 <div class="image-holder"> <img src="{{ food.image.url }}" alt=""></div>
                                                 <div class="text-holder">
+
                                                     <h6>{{ food }}</h6>
                                                     <span>{{ food.description }}</span>
                                                 </div>
                                                 <div class="price-holder">
                                                     <span class="price">${{food.price}}</span>
                                                     <a href="" class="decrease-cart" data_id ={{food.id}} data_url=" {% url 'decrease_cart' food.id %}" style="margin-right: 28px;"><i class="icon-minus text-color"></i></a>
-                                                    <label id="qty">0</label>
+                                                    <label id="qty-{{food.id}}">0</label>
                                             
                                                     <a href="" class="add_to_cart" data_id ={{food.id}} data_url=" {% url 'add_to_cart' food.id %}"><i class="icon-plus4 text-color"></i></a>
 
@@ -120,14 +122,12 @@
                                             
                                         </ul>
                                         {% endfor %}
-                                        
+                                        {% endif %}
                                     </div>
 
                                     {% for item in cart_items %}
 
                                     <span id="qty-{{item.fooditem.id}}" class="item_qty d-none" data-qty="{{ item.quantity }}">{{ item.quantity }}</span>
-
-                                    
 
                                     {% endfor %}
                                 </div>
@@ -143,4 +143,5 @@
 </div>
 <!-- Main Section End -->
 </body>
+
 {% endblock %}
