@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{%  load static %}
 {% block content %}
 
 <!-- Main Section Start -->
@@ -83,6 +83,7 @@
                                 <div class="menu-itam-holder">
                                     <div>
                                         <ul>
+
                                             <li style="list-style-type: none;">
                                                 Subtotal
                                             <span class="price float-right">
@@ -92,13 +93,31 @@
                                             </li>
 
                                             <li style="list-style-type: none;">
-                                                TAX
-                                                <span class="price float-right">
-                                                    <span class="currency">$</span>
-                                                    <span id="tax">{{tax}}</span>
-                                                </span>
+                                                Tax
+                                            <span class="price float-right">
+                                                <span class="currency">$</span>
+                                                <span id="tax">{{ tax }}</span>
+                                         
+                                            </span>
                                             </li>
 
+
+<!--                                             
+                                            {% for key, x in tax_dict.items %}
+                                            {% for i, j in x.items %}
+                                            <li style="list-style-type: none;">
+                                                {{ key }} <small>({{ i }}%)</small>
+                                                <span class="price float-right">
+                                                    <span class="currency">$</span>
+                                                    <span id="tax-{{ key }}">{{ j }}</span>
+                                               
+
+                                                </span>
+                                            </li>
+                                            {% endfor %}
+                                            {% endfor %}
+                                             -->
+          
                                             <li style="list-style-type: none; font-weight: 600;">
                                                 TOTAL
                                                 <span class="price float-right">
@@ -106,6 +125,11 @@
                                                     <span id="total">{{grand_total}}</span>
                                                 </span>
                                             </li>
+
+
+
+                                            <a href="{%  url 'checkout' %}" class="btn btn-danger w-100 9-2 mt-3">CHECKOUT</a>
+
                                         </ul>
                                     </div>
 

@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'vendor',
     'menue',
     'marketplace',
+    'customers',
+    'orders',
 ]
 
 MIDDLEWARE = [
@@ -55,6 +57,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'orders.request_object.RequestObjectmiddleware' #custom middlewear created to access the request object in models.py
 ]
 
 ROOT_URLCONF = 'OnlineFood_main.urls'
@@ -70,10 +73,13 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                # 'accounts.context_processors.get_vendor',
+                'accounts.context_processors.get_vendor',
                 # 'accounts.context_processors.get_google_api',
                 'marketplace.context_processors.get_cart_counter',
                 'marketplace.context_processors.get_cart_amounts',
+                'accounts.context_processors.get_user_profile',
+                'accounts.context_processors.get_paypal_client_id',
+                
                
             ],
         },
@@ -147,7 +153,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # media_configrtion
 
-MEDIA_URL = '/media/'
+MEDIA_URL = 'media/'
 MEDIA_ROOT= BASE_DIR/'media'
 
 #for the animated messages
@@ -166,3 +172,7 @@ EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'foodOnline Marketplace <el.fallah15@gmail.com>'
 
 # GOOGLE_API_KEY = 'AIzaSyBmr5x8LX8pj8vdEsbsyV_xz0zXfoo-Lcc'
+
+PAYPAL_CLIENT_ID =config('PAYPAL_CLIENT_ID')
+
+SECURE_CROSS_ORIGIN_OPENER_POLICY = 'same_origin_allow_popups'

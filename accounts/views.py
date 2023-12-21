@@ -13,6 +13,7 @@ from django.contrib.auth.tokens import default_token_generator
 from django.utils.http import urlsafe_base64_decode
 from vendor.models import Vendor
 from django.template.defaultfilters import slugify
+from orders.models import Order , OrderedFood
 
 # restric the vendor from accsesing the customer page
 def check_role_vendor(user):
@@ -166,16 +167,27 @@ def my_account(request):
 
 @login_required(login_url ='login')
 @user_passes_test(check_role_customer)
-  
 def cus_dashbord(request):
-    return render (request,"accounts/cusDashbord.html")
+    orders = Order.objects.filter(user=request.user, is_ordered=True)
+    recent_orders = orders[:5]
+    context={
+        'orders': orders,
+        'count_orders': orders.count(),
+        'recent_orders': recent_orders,
+    }
+    return render (request,"accounts/cusDashbord.html", context)
 
 @login_required(login_url ='login')
 @user_passes_test(check_role_vendor)
 def ven_dashbord(request):
     vendor = Vendor.objects.get(user = request.user)
+    orders = Order.objects.filter(vendor__in =[vendor.id], is_ordered = True).order_by('-created_at')
+    recent_orders = orders[:10]
+
     context={
-        'vendor': vendor,
+        'orders': orders,
+        'orders_count':orders.count(),
+        'recent_orders': recent_orders,
     }  
     return render (request,"accounts/venDashbord.html", context)
 

@@ -1,0 +1,11 @@
+{% autoescape off %}
+ hi {{user.first_name}},
+ 
+ please click in bellow link to confirm your registration.
+
+ Thank ypu for your order!
+ 
+your order number: {{order.order_number}}
+your transaction_id : {{order.payment.transaction_id}}
+
+{% endautoescape %}
